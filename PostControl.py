@@ -17,5 +17,5 @@ class PostControl(ABC):
         pass
 
     @abstractmethod
-    def callSelect(self):
+    def CallSelect(self):
         pass

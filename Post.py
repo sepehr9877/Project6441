@@ -3,7 +3,6 @@ class Post(ABC):
     title=None
     Element=None
     def setDescription(self,Description):
-        print("descripto")
         self.title=Description
     def SetElement(self,Element):
         self.Element=Element

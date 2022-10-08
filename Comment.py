@@ -47,7 +47,24 @@ class Comment(Post):
                 del self.Comment_objects[index]
         print(self.Comment_objects)
         print("Delete Query for Comment")
-    def Update_Element(self):
+    def Update_Element(self,**kwargs):
+        id=kwargs["id"]
+        name=kwargs["name"]
+        for index,item in enumerate(self.Comment_objects):
+            if item.get("id")==id:
+                item.update({"name":name})
+        print(self.Comment_objects)
         print("Update Query for Comment")
-    def Select_Element(self):
+    def Select_Element(self,**kwargs):
+        id=kwargs["id"]
+        selected_comment=None
+        if id is not None:
+            for index, item in enumerate(self.Comment_objects):
+                if item.get("id") == id:
+                    selected_comment = item
+        else:
+            selected_comment=self.Comment_objects
+        print(selected_comment)
         print("Select Query for Comment")
+        return selected_comment
+

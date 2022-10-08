@@ -8,10 +8,10 @@ class MakePost(PostControl):
         self.Element.Insert_Element(Element)
     def CallDelte(self,**kwargs):
         self.Element.Delete_Element(**kwargs)
-    def CallUpdate(self,Element):
-        self.Element.Update_Element()
-    def callSelect(self,Element):
-        self.Element.Select_Element()
+    def CallUpdate(self,**kwargs):
+        self.Element.Update_Element(**kwargs)
+    def CallSelect(self,**kwargs):
+        self.Element.Select_Element(**kwargs)
     def MakePost(self,comment,photo):
         pass
 

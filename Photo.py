@@ -41,7 +41,23 @@ class Photo(Post):
                 del self.Photo_object[index]
         print(self.Photo_object)
         print("Delete Query for Photo")
-    def Update_Element(self):
+    def Update_Element(self,**kwargs):
+        id=kwargs["id"]
+        title=kwargs["title"]
+        for index,item in enumerate(self.Photo_object):
+            if item.get("id")==id:
+                item.update({"title":title})
+        print(self.Photo_object)
         print("Update Query for Photo")
-    def Select_Element(self):
+    def Select_Element(self,**kwargs):
+        id = kwargs["id"]
+        selected_item=None
+        if id is not None:
+            for index, item in enumerate(self.Photo_object):
+                if item.get("id")==id:
+                    selected_item=item
+        else:
+            selected_item=self.Photo_object
+        print(selected_item)
         print("Select Query for Photo")
+        return selected_item

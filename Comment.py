@@ -19,7 +19,7 @@ class Comment(Post):
     def ReadApi(self):
         Comment_response = requests.get("https://jsonplaceholder.typicode.com/comments")
         Comment_data = json.loads(Comment_response.text)
-        for i in range(0,5):
+        for i in range(0,3):
             id=i+1
             name_item=Comment_data[i].get("name")
             email_item=Comment_data[i].get("email")

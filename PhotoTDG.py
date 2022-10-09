@@ -1,2 +1,0 @@
-print("hgh")
-print("gggg")

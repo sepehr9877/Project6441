@@ -3,12 +3,14 @@ import json
 import requests
 
 from Post import Post
+from ElementTDG import TDG
 class Comment(Post):
     id=0
     name=None
     email=None
     commentbody=None
     Comment_objects=[]
+    comment_TDG=TDG()
     def __call__(self,body,name,email):
         self.setDescription(body)
         self.name=name
@@ -35,17 +37,19 @@ class Comment(Post):
         self.commentbody = self.title
         commentobject = {"id":self.id, "name": self.name, "email": self.email,
                          "body": self.commentbody}
+        self.comment_TDG.InsertComment(name=self.name,email=self.email,body=self.commentbody)
 
 
         self.Comment_objects.append(commentobject)
-        print(self.Comment_objects)
-        print("Run Insert Query For Comment")
+        self.comment_TDG.InsertComment(name=self.name,body=self.commentbody,email=self.email)
+        return commentobject
     def Delete_Element(self,**kwargs):
         id=kwargs["id"]
         for index,item in enumerate(self.Comment_objects):
             if item.get("id")==id:
                 del self.Comment_objects[index]
         print(self.Comment_objects)
+        self.comment_TDG.DeleteComment(id=id)
         print("Delete Query for Comment")
     def Update_Element(self,**kwargs):
         id=kwargs["id"]
@@ -54,6 +58,7 @@ class Comment(Post):
             if item.get("id")==id:
                 item.update({"name":name})
         print(self.Comment_objects)
+        self.comment_TDG.UpdateComment(id=id,name=name)
         print("Update Query for Comment")
     def Select_Element(self,**kwargs):
         id=kwargs["id"]
@@ -65,6 +70,7 @@ class Comment(Post):
         else:
             selected_comment=self.Comment_objects
         print(selected_comment)
+        self.comment_TDG.SelectComment(id=id)
         print("Select Query for Comment")
         return selected_comment
 

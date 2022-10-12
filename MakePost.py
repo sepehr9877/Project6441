@@ -1,14 +1,16 @@
 from PostControl import PostControl
 from Post import Post
+from ElementTDG import TDG
 class MakePost(PostControl):
     Element=None
     Post_objects=[]
     description=None
     id=0
+    _instance=None
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls,'instance'):
-            cls.instance=super(MakePost,cls).__new__(cls)
-        return cls.instance
+            cls._instance=super(MakePost,cls).__new__(cls)
+        return cls._instance
     def MakeELement(self,Element):
         self.Element=Element
     def CallInsert(self,Element):
@@ -24,7 +26,7 @@ class MakePost(PostControl):
         print("Myphotp")
         print(photo.get("title"))
         self.id=self.id +1
-        item={"id":self.id,"comment_id":comment.get("id"),"pohot_id":photo.get("id"),"description":self.description}
+        item={"comment_id":comment.get("id"),"pohot_id":photo.get("id"),"description":self.description}
         self.Post_objects.append(item)
         return self.Post_objects
     def SelectPost(self,**kwargs):

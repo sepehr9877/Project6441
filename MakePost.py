@@ -6,13 +6,10 @@ class MakePost(PostControl):
     Post_objects=[]
     description=None
     id=0
-    _instance=None
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls,'instance'):
-            cls._instance=super(MakePost,cls).__new__(cls)
-        return cls._instance
-    def MakeELement(self,Element):
+    def __init__(self,Element):
         self.Element=Element
+    def ReadFromApi(self):
+        self.Element.ReadApi()
     def CallInsert(self,Element):
         return self.Element.Insert_Element(Element)
     def CallDelte(self,**kwargs):

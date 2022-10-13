@@ -3,13 +3,15 @@ import requests
 import json
 class PostControl(ABC):
     post_title=None
-
     @abstractmethod
-    def CallInsert(self):
+    def ReadFromApi(self):
+        pass
+    @abstractmethod
+    def CallInsert(self,Element):
         pass
 
     @abstractmethod
-    def CallUpdate(self):
+    def CallUpdate(self,**kwargs):
         pass
 
     @abstractmethod
@@ -17,5 +19,5 @@ class PostControl(ABC):
         pass
 
     @abstractmethod
-    def CallSelect(self):
+    def CallSelect(self,**kwargs):
         pass

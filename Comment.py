@@ -5,12 +5,12 @@ import requests
 from Post import Post
 from ElementTDG import TDG
 class Comment(Post):
-    id=0
     name=None
     email=None
     commentbody=None
     Comment_objects=[]
-    __comment_TDG=TDG()
+    def __init__(self):
+        self.__comment_TDG=TDG()
     def __call__(self,body,name,email):
         self.setDescription(body)
         self.name=name
@@ -19,6 +19,7 @@ class Comment(Post):
         commentobject={"name":self.name,"email":self.email,"body":self.commentbody}
         return  commentobject
     def ReadApi(self):
+        print("ff")
         Comment_response = requests.get("https://jsonplaceholder.typicode.com/comments")
         Comment_data = json.loads(Comment_response.text)
         for i in range(0,3):
@@ -35,7 +36,7 @@ class Comment(Post):
         self.email = object["email"]
         self.id= len(self.Comment_objects)+1
         self.commentbody = self.title
-        commentobject = {"id":self.id, "name": self.name, "email": self.email,
+        commentobject = { "name": self.name, "email": self.email,
                          "body": self.commentbody}
         comment_item=[commentobject]
         self.__comment_TDG.InsertComment(comment_item)

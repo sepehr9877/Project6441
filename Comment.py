@@ -19,7 +19,6 @@ class Comment(Post):
         commentobject={"name":self.name,"email":self.email,"body":self.commentbody}
         return  commentobject
     def ReadApi(self):
-        print("ff")
         Comment_response = requests.get("https://jsonplaceholder.typicode.com/comments")
         Comment_data = json.loads(Comment_response.text)
         for i in range(0,3):
@@ -47,8 +46,8 @@ class Comment(Post):
         print("Delete Query for Comment")
     def Update_Element(self,**kwargs):
         id=kwargs["id"]
-        name=kwargs["name"]
-        self.__comment_TDG.UpdateComment(id=id,name=name)
+        commentname=kwargs["name"]
+        self.__comment_TDG.UpdateComment(id=id,name=commentname)
         print("Update Query for Comment")
     def Select_Element(self,**kwargs):
         id=kwargs["id"]

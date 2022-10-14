@@ -16,7 +16,7 @@ class MakePost(PostControl):
     def CallUpdate(self,**kwargs):
         self.Element.Update_Element(**kwargs)
     def CallSelect(self,**kwargs):
-        self.Element.Select_Element(**kwargs)
+        return self.Element.Select_Element(**kwargs)
     def ChecktheCommentResponse(self):
         response_comment=requests.get('https://jsonplaceholder.typicode.com/comments')
         if response_comment.ok:

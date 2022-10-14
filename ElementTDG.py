@@ -3,12 +3,14 @@ from sqlite3 import Error
 class TDG():
     _cursor=None
     _conn=None
-    _instance=None
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, 'instance'):
+    #Implementing SingleTon Desing Pattern
+    def __new__(cls):
+        if not hasattr(cls, '_instance'):
             cls._instance = super(TDG, cls).__new__(cls)
         return cls._instance
     def __init__(self):
+        print("Enter INit")
+        # self._instance=self
         self._conn=self.__ConnetToDB()
     def __checktable(self,TableName):
         tablename=self.cursor.execute("SELECT name from sqlite_master where type='table' and name=?",(TableName,)).fetchall()

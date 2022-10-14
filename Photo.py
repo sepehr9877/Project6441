@@ -8,7 +8,8 @@ class Photo(Post):
     url=None
     thumbnailUrl=None
     Photo_object=[]
-    __TDG_photo=TDG()
+    def __init__(self):
+        self.__TDG_photo=TDG()
     def __call__(self,desc,url,thumurl):
         self.setDescription(desc)
         self.photodes=self.title

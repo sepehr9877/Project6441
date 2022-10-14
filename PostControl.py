@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 import requests
 import json
 class PostControl(ABC):
-    post_title=None
     @abstractmethod
     def ReadFromApi(self):
         pass

@@ -9,8 +9,6 @@ class TDG():
             cls._instance = super(TDG, cls).__new__(cls)
         return cls._instance
     def __init__(self):
-        print("Enter INit")
-        # self._instance=self
         self._conn=self.__ConnetToDB()
     def __checktable(self,TableName):
         tablename=self.cursor.execute("SELECT name from sqlite_master where type='table' and name=?",(TableName,)).fetchall()
@@ -72,19 +70,19 @@ class TDG():
             delete_query='delete from photo where PhotoID=?'
             self.cursor.execute(delete_query,(id,))
             self._conn.commit()
-        print("Run Delete Query")
+        print("Run Delete Photo Query")
         pass
     def DeleteComment(self,**kwargs):
         id=kwargs["id"]
         if self.__checktable("comment"):
             self.cursor.execute("delete from comment where CommentID=?",(id,))
             self._conn.commit()
-        print("Run Delete Query")
+        print("Run Delete Comment Query")
         pass
     def UpdateComment(self,**kwargs):
         id=kwargs["id"]
         name=kwargs["name"]
-        self.cursor.execute("update comment set name = ? where CommentID =?",(name,id,))
+        self.cursor.execute("update comment set name = ? where CommentID =?;",(name,id,))
         self._conn.commit()
         print("Run Update Query for Comment")
         pass
@@ -94,15 +92,19 @@ class TDG():
         update_photo='update photo set title = ? where PhotoID =?;'
         self.cursor.execute(update_photo,(title,id,))
         self._conn.commit()
-        print("Update Query")
+        print("Run Update Query for Photo")
         pass
     def SelectPhoto(self,id):
         if self.__checktable("photo"):
-            selected_query='select * from photo;'
+            selected_query='select * from photo  where PhotoID=?'
             selected_photo=self.cursor.execute(selected_query,(id,)).fetchall()
+            print("Selected Photo")
+            print(selected_photo)
             return selected_photo
     def SelectComment(self,id):
         if self.__checktable("comment"):
-            selected_comment=self.cursor.execute("select * from comment;").fetchone()
+            selected_comment=self.cursor.execute("select * from comment where CommentID=?",(id,)).fetchall()
+            print("Selected Comment")
+            print(selected_comment)
             return selected_comment
 

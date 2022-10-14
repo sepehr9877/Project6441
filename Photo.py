@@ -50,5 +50,6 @@ class Photo(Post):
         print("Update Query for Photo")
     def Select_Element(self,**kwargs):
         id = kwargs["id"]
-        self.__TDG_photo.SelectPhoto(id=id)
+        selected_photo=self.__TDG_photo.SelectPhoto(id=id)
         print("Select Query for Photo")
+        return selected_photo

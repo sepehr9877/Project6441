@@ -1,17 +1,17 @@
 import sqlite3
 from sqlite3 import Error
 class TDG():
-    _cursor=None
-    _conn=None
+    __cursor=None
+    __conn=None
     #Implementing SingleTon Desing Pattern
     def __new__(cls):
         if not hasattr(cls, '_instance'):
             cls._instance = super(TDG, cls).__new__(cls)
         return cls._instance
     def __init__(self):
-        self._conn=self.__ConnetToDB()
+        self.__conn=self.__ConnetToDB()
     def __checktable(self,TableName):
-        tablename=self.cursor.execute("SELECT name from sqlite_master where type='table' and name=?",(TableName,)).fetchall()
+        tablename=self.__cursor.execute("SELECT name from sqlite_master where type='table' and name=?",(TableName,)).fetchall()
         if tablename ==[]:
             return False
         return True
@@ -19,9 +19,9 @@ class TDG():
     def __ConnetToDB(self):
         conn=sqlite3.connect('Test.db')
         cursor=conn.cursor()
-        self.cursor=cursor
-        self._conn=conn
-        return self._conn
+        self.__cursor=cursor
+        self.__conn=conn
+        return self.__conn
     def CreatePhotTable(self):
         PhotoTable='''
         create table photo(
@@ -31,7 +31,7 @@ class TDG():
         thumbnailurl varchar(100)
         )
         '''
-        self.cursor.execute(PhotoTable)
+        self.__cursor.execute(PhotoTable)
     def InsertPhoto(self,photo_objects):
         if not self.__checktable("photo"):
             self.CreatePhotTable()
@@ -39,8 +39,8 @@ class TDG():
             title=item.get("title")
             url=item.get("url")
             thumbnailurl=item.get("thumbnailUrl")
-            self.cursor.execute("insert into photo(title, url, thumbnailurl) values(?,?,?)",(title,url,thumbnailurl))
-            self._conn.commit()
+            self.__cursor.execute("insert into photo(title, url, thumbnailurl) values(?,?,?)",(title,url,thumbnailurl))
+            self.__conn.commit()
         print("Insert Query For Photo")
         pass
     def CreateCommentTable(self):
@@ -50,7 +50,7 @@ class TDG():
                         email varchar(40),
                         body varchar(500));
                             '''
-        self.cursor.execute(comment_table)
+        self.__cursor.execute(comment_table)
 
     def InsertComment(self,comment_object):
         if not self.__checktable("comment"):
@@ -59,8 +59,8 @@ class TDG():
             name=item.get("name")
             email=item.get("email")
             body=item.get("body")
-            self.cursor.execute('insert into comment(name, email, body) values(?,?,?)',(name,email,body))
-            self._conn.commit()
+            self.__cursor.execute('insert into comment(name, email, body) values(?,?,?)',(name,email,body))
+            self.__conn.commit()
 
         print("Insert Query for Comment")
         pass
@@ -68,42 +68,42 @@ class TDG():
         id = kwargs["id"]
         if self.__checktable("photo"):
             delete_query='delete from photo where PhotoID=?'
-            self.cursor.execute(delete_query,(id,))
-            self._conn.commit()
+            self.__cursor.execute(delete_query,(id,))
+            self.__conn.commit()
         print("Run Delete Photo Query")
         pass
     def DeleteComment(self,**kwargs):
         id=kwargs["id"]
         if self.__checktable("comment"):
-            self.cursor.execute("delete from comment where CommentID=?",(id,))
-            self._conn.commit()
+            self.__cursor.execute("delete from comment where CommentID=?",(id,))
+            self.__conn.commit()
         print("Run Delete Comment Query")
         pass
     def UpdateComment(self,**kwargs):
         id=kwargs["id"]
         name=kwargs["name"]
-        self.cursor.execute("update comment set name = ? where CommentID =?;",(name,id,))
-        self._conn.commit()
+        self.__cursor.execute("update comment set name = ? where CommentID =?;",(name,id,))
+        self.__conn.commit()
         print("Run Update Query for Comment")
         pass
     def UpdatePhoto(self,**kwargs):
         id=kwargs["id"]
         title=kwargs["title"]
         update_photo='update photo set title = ? where PhotoID =?;'
-        self.cursor.execute(update_photo,(title,id,))
-        self._conn.commit()
+        self.__cursor.execute(update_photo,(title,id,))
+        self.__conn.commit()
         print("Run Update Query for Photo")
         pass
     def SelectPhoto(self,id):
         if self.__checktable("photo"):
             selected_query='select * from photo  where PhotoID=?'
-            selected_photo=self.cursor.execute(selected_query,(id,)).fetchall()
+            selected_photo=self.__cursor.execute(selected_query,(id,)).fetchall()
             print("Selected Photo")
             print(selected_photo)
             return selected_photo
     def SelectComment(self,id):
         if self.__checktable("comment"):
-            selected_comment=self.cursor.execute("select * from comment where CommentID=?",(id,)).fetchall()
+            selected_comment=self.__cursor.execute("select * from comment where CommentID=?",(id,)).fetchall()
             print("Selected Comment")
             print(selected_comment)
             return selected_comment

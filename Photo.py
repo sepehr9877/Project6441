@@ -20,25 +20,34 @@ class Photo(Post):
     def ReadApi(self):
         Photo_response = requests.get("https://jsonplaceholder.typicode.com/photos")
         Photo_data = json.loads(Photo_response.text)
-        for i in range(0, 3):
-            url_item=Photo_data[i].get("url")
-            title_item=Photo_data[i].get("title")
-            thumbnailUrl_item=Photo_data[i].get("thumbnailUrl")
+        for i in range(0, 6):
+            thumbnailUrl_item, title_item, url_item = self.__set_api_item(Photo_data, i)
             Photo_elements={"url":url_item,"title":title_item,"thumbnailUrl":thumbnailUrl_item}
             self.Photo_object.append(Photo_elements)
         self.__TDG_photo.InsertPhoto(self.Photo_object)
         return True
+
+    def __set_api_item(self, Photo_data, i):
+        url_item = Photo_data[i].get("url")
+        title_item = Photo_data[i].get("title")
+        thumbnailUrl_item = Photo_data[i].get("thumbnailUrl")
+        return thumbnailUrl_item, title_item, url_item
+
     def Insert_Element(self,object):
-        self.setDescription(object["title"])
-        self.photodes=self.title
-        self.url=object["url"]
-        self.thumbnailUrl=object["thumbnailUrl"]
+        self.__set_photo_object_element(object)
         photo_item={"title":self.photodes,"url":self.url,"thumbnailUrl":self.thumbnailUrl}
         item_list=[photo_item]
         self.__TDG_photo.InsertPhoto(item_list)
         print(self.Photo_object)
         print("Run Insert Query For Photo")
         return photo_item
+
+    def __set_photo_object_element(self, object):
+        self.setDescription(object["title"])
+        self.photodes = self.title
+        self.url = object["url"]
+        self.thumbnailUrl = object["thumbnailUrl"]
+
     def Delete_Element(self,**kwargs):
         id = kwargs["id"]
         self.__TDG_photo.DeletePhoto(id=id)

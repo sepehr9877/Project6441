@@ -21,7 +21,7 @@ class Comment(Post):
     def ReadApi(self):
         Comment_response = requests.get("https://jsonplaceholder.typicode.com/comments")
         Comment_data = json.loads(Comment_response.text)
-        for i in range(0,3):
+        for i in range(0,5):
             name_item=Comment_data[i].get("name")
             email_item=Comment_data[i].get("email")
             body_item=Comment_data[i].get("body")
@@ -30,16 +30,19 @@ class Comment(Post):
         self.__comment_TDG.InsertComment(self.Comment_objects)
 
     def Insert_Element(self,object):
-        self.setDescription(object["body"])
-        self.name = object["name"]
-        self.email = object["email"]
-        self.id= len(self.Comment_objects)+1
-        self.commentbody = self.title
+        self.__set_object_element(object)
         commentobject = { "name": self.name, "email": self.email,
                          "body": self.commentbody}
         comment_item=[commentobject]
         self.__comment_TDG.InsertComment(comment_item)
         return comment_item
+
+    def __set_object_element(self, object):
+        self.setDescription(object["body"])
+        self.name = object["name"]
+        self.email = object["email"]
+        self.commentbody = self.title
+
     def Delete_Element(self,**kwargs):
         id=kwargs["id"]
         self.__comment_TDG.DeleteComment(id=id)

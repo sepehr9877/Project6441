@@ -7,22 +7,21 @@ class Post(ABC):
     def SetElement(self,Element):
         self.Element=Element
 
-    @abstractmethod
     def Insert_Element(self):
-        self.Element.insert()
-    @abstractmethod
+        pass
+
     def ReadApi(self):
         pass
 
-    @abstractmethod
+
     def Delete_Element(self):
-        self.Element.Delete()
+        pass
 
-    @abstractmethod
+
     def Update_Element(self):
-        self.Element.Update()
+        pass
 
-    @abstractmethod
+
     def Select_Element(self):
-        self.Element.Select()
+        pass
 

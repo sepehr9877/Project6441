@@ -22,22 +22,26 @@ class Comment(Post):
         Comment_response = requests.get("https://jsonplaceholder.typicode.com/comments")
         Comment_data = json.loads(Comment_response.text)
         for i in range(0,5):
-            name_item=Comment_data[i].get("name")
-            email_item=Comment_data[i].get("email")
-            body_item=Comment_data[i].get("body")
+            body_item, email_item, name_item = self.__set_api_item_comment(Comment_data, i)
             comment_item={"name":name_item,"email":email_item,"body":body_item}
             self.Comment_objects.append(comment_item)
         self.__comment_TDG.InsertComment(self.Comment_objects)
 
+    def __set_api_item_comment(self, Comment_data, i):
+        name_item = Comment_data[i].get("name")
+        email_item = Comment_data[i].get("email")
+        body_item = Comment_data[i].get("body")
+        return body_item, email_item, name_item
+
     def Insert_Element(self,object):
-        self.__set_object_element(object)
+        self.__set_comment_object_element(object)
         commentobject = { "name": self.name, "email": self.email,
                          "body": self.commentbody}
         comment_item=[commentobject]
         self.__comment_TDG.InsertComment(comment_item)
         return comment_item
 
-    def __set_object_element(self, object):
+    def __set_comment_object_element(self, object):
         self.setDescription(object["body"])
         self.name = object["name"]
         self.email = object["email"]

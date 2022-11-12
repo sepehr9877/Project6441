@@ -9,7 +9,7 @@ class Photo(Post):
     thumbnailUrl=None
     Photo_object=[]
     def __init__(self):
-        self.__TDG_photo=TDG()
+        self.__photo_TDG=TDG()
     def __call__(self,desc,url,thumurl):
         self.setDescription(desc)
         self.photodes=self.title
@@ -21,13 +21,13 @@ class Photo(Post):
         Photo_response = requests.get("https://jsonplaceholder.typicode.com/photos")
         Photo_data = json.loads(Photo_response.text)
         for i in range(0, 6):
-            thumbnailUrl_item, title_item, url_item = self.__set_api_item(Photo_data, i)
+            thumbnailUrl_item, title_item, url_item = self.__set_api_item_photo(Photo_data, i)
             Photo_elements={"url":url_item,"title":title_item,"thumbnailUrl":thumbnailUrl_item}
             self.Photo_object.append(Photo_elements)
-        self.__TDG_photo.InsertPhoto(self.Photo_object)
+        self.__photo_TDG.InsertPhoto(self.Photo_object)
         return True
 
-    def __set_api_item(self, Photo_data, i):
+    def __set_api_item_photo(self, Photo_data, i):
         url_item = Photo_data[i].get("url")
         title_item = Photo_data[i].get("title")
         thumbnailUrl_item = Photo_data[i].get("thumbnailUrl")
@@ -35,12 +35,12 @@ class Photo(Post):
 
     def Insert_Element(self,object):
         self.__set_photo_object_element(object)
-        photo_item={"title":self.photodes,"url":self.url,"thumbnailUrl":self.thumbnailUrl}
-        item_list=[photo_item]
-        self.__TDG_photo.InsertPhoto(item_list)
+        photoobject={"title":self.photodes,"url":self.url,"thumbnailUrl":self.thumbnailUrl}
+        photo_item=[photoobject]
+        self.__photo_TDG.InsertPhoto(photo_item)
         print(self.Photo_object)
         print("Run Insert Query For Photo")
-        return photo_item
+        return photoobject
 
     def __set_photo_object_element(self, object):
         self.setDescription(object["title"])
@@ -50,15 +50,15 @@ class Photo(Post):
 
     def Delete_Element(self,**kwargs):
         id = kwargs["id"]
-        self.__TDG_photo.DeletePhoto(id=id)
+        self.__photo_TDG.DeletePhoto(id=id)
         print("Delete Query for Photo")
     def Update_Element(self,**kwargs):
         id=kwargs["id"]
         title=kwargs["title"]
-        self.__TDG_photo.UpdatePhoto(id=id,title=title)
+        self.__photo_TDG.UpdatePhoto(id=id, title=title)
         print("Update Query for Photo")
     def Select_Element(self,**kwargs):
         id = kwargs["id"]
-        selected_photo=self.__TDG_photo.SelectPhoto(id=id)
+        selected_photo=self.__photo_TDG.SelectPhoto(id=id)
         print("Select Query for Photo")
         return selected_photo
